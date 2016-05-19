@@ -1,0 +1,14 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="ss" Local="true">
+		<ClockDomain Name="Kitchen"  Class="Kitchen">
+			<oSignal Name="humanPresenceStatus" IP="127.0.0.1" Class="com.systemj.ipc.TCPSender" Port="10001"/>
+			<oSignal Name="lightIntensityValue" IP="127.0.0.1" Class="com.systemj.ipc.TCPSender" Port="10002"/>
+			<oSignal Name="lightStatus" IP="127.0.0.1" Class="com.systemj.ipc.TCPSender" Port="10003"/>
+		</ClockDomain>
+		<ClockDomain Name="KitchenController"  Class="KitchenController">
+			<iSignal Name="humanPresenceStatus" IP="127.0.0.1" Class="com.systemj.ipc.TCPReceiver" Port="10001"/>
+			<iSignal Name="lightIntensityValue" IP="127.0.0.1" Class="com.systemj.ipc.TCPReceiver" Port="10002"/>
+			<iSignal Name="lightStatus" IP="127.0.0.1" Class="com.systemj.ipc.TCPReceiver" Port="10003"/>
+		</ClockDomain>
+	</SubSystem>
+</System>

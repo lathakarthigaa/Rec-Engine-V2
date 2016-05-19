@@ -1,0 +1,113 @@
+//import src.Simulation.HumanPresenceSimulation;
+
+Kitchen(output Boolean signal lightStatus;output Boolean signal humanPresenceStatus; output Double signal lightIntensityValue;)->
+{	
+	//Reaction: Light
+	//Behaviour: Light Status (ON/OFF)
+	{
+		boolean signal isLightON;
+		{
+			boolean temp = false;//simulated value - DB call
+			emit isLightON(temp);
+		}
+		||
+		{
+			await(isLightON);
+			boolean temp = #isLightON;
+			System.out.println("Light status: "+temp);
+			emit lightStatus(temp);
+		}
+	}
+	||
+	//Reaction: Human Presence Sensor
+	{
+		boolean signal isHumanPresent;
+		{
+			//HumanPresenceSimulation humanPresenceSimulation = new HumanPresenceSimulation();
+			//boolean temp = humanPresenceSimulation.getHumanPresenceStatus("07:24:00");
+			boolean temp = true;//simulated value - DB call
+			emit isHumanPresent(temp);
+		}
+		||
+		{
+			await(isHumanPresent);
+			boolean temp = #isHumanPresent;
+			System.out.println("Human Presence: "+temp);
+			emit humanPresenceStatus(temp);
+		}
+	}
+	||
+	//Reaction: Light Intensity Sensor
+	{
+		double signal lightIntensity;
+		{
+			double temp = 3.66;//simulated value - DB call
+			emit lightIntensity(temp);
+		}
+		||
+		{
+			await(lightIntensity);
+			double temp = #lightIntensity;
+			System.out.println("Light Intensity: "+temp);
+			emit lightIntensityValue(temp);
+		}
+	}
+	||
+	{
+		//Reaction: Fridge (Power Profile added)
+	}
+}
+
+KitchenController(input Boolean signal humanPresenceStatus;input Double signal lightIntensityValue;
+			input Boolean signal lightStatus;)->
+{
+	//Reaction: Light Controller
+	{
+		boolean signal humanPresence, lightState;
+		double signal lightIntensity;
+		{
+			await(humanPresenceStatus);
+			boolean temp = #humanPresenceStatus;
+			System.out.println("Con:Hum Pre: "+temp);
+			emit humanPresence(temp);
+		}
+		||
+		{
+			await(lightIntensityValue);
+			double temp = #lightIntensityValue;
+			System.out.println("Con:Light In: "+temp);
+			emit lightIntensity(temp);
+		}
+		||
+		{
+			await(lightStatus);
+			boolean temp = #lightStatus;
+			System.out.println("Con:Light status: "+temp);
+			emit lightState(temp);
+		}
+		||
+		{
+			{await(humanPresence);}||{await(lightIntensity);}||{await(lightState);}
+			boolean temp_humanPresence = #humanPresence;
+			boolean temp_lightStatus = #lightState;
+			double temp_lightIntensity = #lightIntensity;
+			final double LIGHT_INTENSITY_LIMIT = 20.3;  
+			if(temp_humanPresence == false && temp_lightStatus == true)
+			{
+				System.out.println("Switch off light:kitchen"); //update db automatically
+			}
+			else if(temp_humanPresence == true && temp_lightIntensity < LIGHT_INTENSITY_LIMIT && temp_lightStatus == false)
+			{
+				System.out.println("Switch on light to increase brightness:kitchen");
+			}
+			else if(temp_humanPresence == true && temp_lightIntensity >= LIGHT_INTENSITY_LIMIT && temp_lightStatus == true)
+			{
+				System.out.println("Light Intensity is high. Switch off light to save energy:kitchen");
+			}
+		}
+	}
+	||
+	{
+		//Reaction: 
+	}
+}

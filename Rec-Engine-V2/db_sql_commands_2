@@ -1,0 +1,67 @@
+create table human_presence(
+	Time_of_the_day time,
+	isHumanPresent integer
+);
+
+insert into human_presence values('03:10:00',0);
+insert into human_presence values('04:10:00',0);
+insert into human_presence values('05:10:00',0);
+insert into human_presence values('06:10:00',0);
+insert into human_presence values('07:10:00',0);
+insert into human_presence values('08:10:00',1);
+insert into human_presence values('09:10:00',1);
+insert into human_presence values('10:10:00',0);
+insert into human_presence values('11:10:00',0);
+insert into human_presence values('12:10:00',1);
+insert into human_presence values('13:10:00',0);
+insert into human_presence values('14:10:00',0);
+insert into human_presence values('15:10:00',0);
+insert into human_presence values('16:10:00',0);
+insert into human_presence values('17:10:00',0);
+insert into human_presence values('18:10:00',1);
+insert into human_presence values('19:10:00',1);
+insert into human_presence values('20:10:00',0);
+insert into human_presence values('21:10:00',0);
+insert into human_presence values('22:10:00',0);
+insert into human_presence values('23:10:00',0);
+
+select count(*) from human_presence;
+
+delete from human_presence; where Time_of_the_day like '01%';
+
+select *,count(*) from human_presence group by Time_of_the_day,isHumanPresent having count(*)>1;
+
+SELECT Time_of_the_day,isHumanPresent FROM human_presence where Time_of_the_day='02:14:00';create table human_presence(
+	Time_of_the_day time,
+	isHumanPresent integer
+);
+
+insert into human_presence values('03:10:00',0);
+insert into human_presence values('04:10:00',0);
+insert into human_presence values('05:10:00',0);
+insert into human_presence values('06:10:00',0);
+insert into human_presence values('07:10:00',0);
+insert into human_presence values('08:10:00',1);
+insert into human_presence values('09:10:00',1);
+insert into human_presence values('10:10:00',0);
+insert into human_presence values('11:10:00',0);
+insert into human_presence values('12:10:00',1);
+insert into human_presence values('13:10:00',0);
+insert into human_presence values('14:10:00',0);
+insert into human_presence values('15:10:00',0);
+insert into human_presence values('16:10:00',0);
+insert into human_presence values('17:10:00',0);
+insert into human_presence values('18:10:00',1);
+insert into human_presence values('19:10:00',1);
+insert into human_presence values('20:10:00',0);
+insert into human_presence values('21:10:00',0);
+insert into human_presence values('22:10:00',0);
+insert into human_presence values('23:10:00',0);
+
+select count(*) from human_presence;
+
+delete from human_presence; where Time_of_the_day like '01%';
+
+select *,count(*) from human_presence group by Time_of_the_day,isHumanPresent having count(*)>1;
+
+SELECT Time_of_the_day,isHumanPresent FROM human_presence where Time_of_the_day='02:14:00';
